@@ -1,0 +1,15 @@
+{
+  "name": "simple-web-app",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "first simple web app",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon"
+  },
+  "author": "M_Klmc",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { URL } from 'node:url';
 
-// we make multiple imports of controller functions
+//MULTIPLE IMPORTS FOR A CONTROLLERS MODULE
 import { mainPage, errorPage, detailPage }
     from './source/controllers.js'
 

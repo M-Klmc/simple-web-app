@@ -1,4 +1,9 @@
-export function mainPage(res) {
+// CONTROLLERS MODULE
+
+import { loadList, loadItem } from "./model.js";
+import { formatDate } from "./utils.js"; 
+
+export async function mainPage(res) {
     let s = '<!doctype html>' + 
             '<html>' +
                 '<head>' +
@@ -6,26 +11,38 @@ export function mainPage(res) {
                     '<title>to-do list</title>' +
                 '</head>' +
                 '<body>' +
-                    '<h1>to-do</h1>' +
-                '</body>' +
-            '</html>';
-            res.end(s);
+                    '<h1>TO-DO</h1>';
+    const list = await loadList();
+    for (let t of list)
+        s +=    `<h2><a href="/${t._id}/">${t.title}</a></h2>`+
+                `<p>${t.desc}</p>` +
+                `<p><small>Created: ${formatDate(t.createdAt)}</small></p>` +
+                '<p>&nbsp;</p>';
+    s +=            '</body>' +
+                '</html>';
+        res.end(s);
 }
 
-export function detailPage(res, id) {
+export async function detailPage(res, id) {
+    const t = await loadItem(id);
+    if (!t) {
+        errorPage(res);
+        return;
+    }
     res.end('<!doctype html>' + 
             '<html>' +
                 '<head>' +
                     '<meta charset="UTF-8">' +
-                    '<title>to-do list</title>' +
+                    `<title>${t.title} :: to-do list</title>` +
                 '</head>' +
                 '<body>' +
-                    '<h1>case</h1>' +
+                `<h1>${t.title}</h1>` +
+                `<p>${t.desc}</p>` +
                 '</body>' +
             '</html>');    
 }
 
-export function errorPage(res) {
+export async function errorPage(res) {
     res.statusCode = 404;
     res.end('<!doctype html>' + 
             '<html>' +
